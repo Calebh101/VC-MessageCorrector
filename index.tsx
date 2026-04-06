@@ -13,7 +13,6 @@ import definePlugin, { OptionType } from "@utils/types";
 import { Command } from "@vencord/discord-types";
 import { FluxDispatcher } from "@webpack/common";
 
-const enabled: boolean = true;
 const debug: boolean = false;
 const logger = new Logger("MessageCorrector");
 
@@ -60,27 +59,27 @@ const commands: Command[] = [
 export default definePlugin({
     name: "MessageCorrector",
     description: "Corrects the order of messages in the chat, based on when the message reached Discord's servers.",
-    authors: [Devs.Calebh101],
+
     settings: settings,
     commands: commands,
 
-    start() {
-        if (enabled) logger.log("Started in " + (debug ? "debug" : "standard") + " mode");
-    },
-
-    stop() {
-        if (enabled && debug) logger.log("Stopped");
-    },
+    authors: [
+        // Use Devs.Calebh101 if it exists, otherwise define me myself.
+        // This is so it can be installed as a user plugin.
+        Devs["Calebh101" as keyof typeof Devs] ?? {
+            name: "Calebh101",
+            id: 1225628518021599264n,
+        },
+    ],
 
     patches: [
         // When Discord's returning the messages from somewhere, we wrap it in our custom function.
         {
             find: ",showNewMessagesBar:!",
             replacement: {
-                match: /(\i)=\(0,(\w+)\.(\i)\)\(\{messages:(\w+)/,
+                match: /(\i)=\(0,(\i)\.(\i)\)\(\{messages:(\i)/,
                 replace: "$1=(0,$2.$3)({messages:$self.reorder($4)",
             },
-            predicate: () => enabled,
         },
     ],
 
