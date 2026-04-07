@@ -14,16 +14,17 @@ The plugin's entire purpose. See above.
 
 ### Show Message Timestamps
 
-Really a debug feature, this shows timestamps like the below image. This made it easy to see if the plugin was working
+Really a debug feature, this shows colored timestamps like the below image. This made it easy to see if the plugin was working or not.
 
 ![showTimestamps](image.png)
 
 # FAQ
 
-1. Every once in a while, it doesn't reorder until it re-renders, like when another message is received.
+**1. Every once in a while, it doesn't reorder until it re-renders, like when another message is received.**
 
 Yeah, that just happens every once in a while. Discord be Discord. It doesn't happen nearly enough times to justify finding a fix for it though.
 
-# Authors
+---
 
-- Calebh101
+By [Calebh101](https://github.com/Calebh101)<br>
+Repo: [Calebh101/VC-MessageCorrector](https://github.com/Calebh101/VC-MessageCorrector)

@@ -7,7 +7,6 @@
 import { ApplicationCommandInputType } from "@api/Commands";
 import { showNotification } from "@api/Notifications";
 import { definePluginSettings } from "@api/Settings";
-import { Devs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
 import { Command } from "@vencord/discord-types";
@@ -21,11 +20,13 @@ const settings = definePluginSettings({
         description: "Let this plugin reorder messages based on when the message reached Discord's servers. This is kinda the entire point of the plugin.",
         type: OptionType.BOOLEAN,
         default: true,
+        hidden: true,
     },
     showTimestamps: {
         description: "Show UTC ISO 8601 timestamps on messages. This is mainly used for debugging. This setting can also be toggled by /messagetimestamps.",
         type: OptionType.BOOLEAN,
         default: false,
+        hidden: true,
     },
 });
 
@@ -64,9 +65,7 @@ export default definePlugin({
     commands: commands,
 
     authors: [
-        // Use Devs.Calebh101 if it exists, otherwise define me myself.
-        // This is so it can be installed as a user plugin.
-        Devs["Calebh101" as keyof typeof Devs] ?? {
+        {
             name: "Calebh101",
             id: 1225628518021599264n,
         },
