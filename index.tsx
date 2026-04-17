@@ -26,7 +26,6 @@ const settings = definePluginSettings({
         description: "Show UTC ISO 8601 timestamps on messages. This is mainly used for debugging. This setting can also be toggled by /messagetimestamps.",
         type: OptionType.BOOLEAN,
         default: false,
-        hidden: true,
     },
 });
 
@@ -60,6 +59,7 @@ const commands: Command[] = [
 export default definePlugin({
     name: "MessageCorrector",
     description: "Corrects the order of messages in the chat, based on when the message reached Discord's servers.",
+    tags: ["Chat", "Utility"],
 
     settings: settings,
     commands: commands,
@@ -144,6 +144,7 @@ export default definePlugin({
             return messages;
         } catch (e) {
             logger.warn("Unable to reorder messages", e);
+            return messages;
         }
     }
 });

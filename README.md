@@ -8,15 +8,11 @@ This plugin basically uses the timestamps of each message, and sorts them how th
 
 # Settings
 
-### Allow Reordering
-
-The plugin's entire purpose. See above.
-
 ### Show Message Timestamps
 
 Really a debug feature, this shows colored timestamps like the below image. This made it easy to see if the plugin was working or not.
 
-![showTimestamps](image.png)
+![showTimestamps](showtimestamps.png)
 
 # FAQ
 
