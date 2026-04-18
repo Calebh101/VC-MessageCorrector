@@ -16,12 +16,6 @@ const debug: boolean = false;
 const logger = new Logger("MessageCorrector");
 
 const settings = definePluginSettings({
-    allowReordering: {
-        description: "Let this plugin reorder messages based on when the message reached Discord's servers. This is kinda the entire point of the plugin.",
-        type: OptionType.BOOLEAN,
-        default: true,
-        hidden: true,
-    },
     showTimestamps: {
         description: "Show UTC ISO 8601 timestamps on messages. This is mainly used for debugging. This setting can also be toggled by /messagetimestamps.",
         type: OptionType.BOOLEAN,
@@ -32,7 +26,7 @@ const settings = definePluginSettings({
 const commands: Command[] = [
     {
         name: "messagetimestamps",
-        description: "Enable/disable MessageCorrector's message timestamps debug feature.",
+        description: "Enable/disable showing ISO 8601 timestamps under messages.",
         inputType: ApplicationCommandInputType.BUILT_IN,
         execute(args, context) {
             // We manually toggle the setting, then deselect all channels,
@@ -46,7 +40,7 @@ const commands: Command[] = [
 
             showNotification({
                 title: "MessageCorrector",
-                body: `Timestamps are now ${settings.store.showTimestamps ? "enabled" : "disabled"}. The channel will be reloaded.`,
+                body: `Message timestamps are now ${settings.store.showTimestamps ? "enabled" : "disabled"}. The current channel will be reloaded.`,
             });
 
             setTimeout(() => {
@@ -89,7 +83,7 @@ export default definePlugin({
 
         // eslint-disable-next-line prefer-destructuring
         const state: string = props.message.state;
-        var color: string;
+        let color: string;
 
         switch (state) {
             case "SENT":
@@ -129,17 +123,15 @@ export default definePlugin({
         try {
             if (debug) logger.log("Reordering messages...", typeof messages, messages);
 
-            if (settings.store.allowReordering) {
-                // Sort everything by their timestamp.
-                // The timestamp is when the message reached Discord's servers,
-                // **not** the client's stores.
+            // Sort everything by their timestamp.
+            // The timestamp is when the message reached Discord's servers,
+            // **not** the client's stores.
 
-                messages._array = [...messages._array].sort((a, b) => {
-                    const tA = new Date(a.timestamp).getTime();
-                    const tB = new Date(b.timestamp).getTime();
-                    return tA - tB;
-                });
-            }
+            messages._array = [...messages._array].sort((a, b) => {
+                const tA = new Date(a.timestamp).getTime();
+                const tB = new Date(b.timestamp).getTime();
+                return tA - tB;
+            });
 
             return messages;
         } catch (e) {
